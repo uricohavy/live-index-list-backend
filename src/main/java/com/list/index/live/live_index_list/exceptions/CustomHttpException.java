@@ -12,4 +12,27 @@ public abstract class CustomHttpException extends RuntimeException {
         super(message);
         this.status = status;
     }
+
+    public CustomHttpException(String message, Throwable cause, HttpStatus status) {
+        super(message, cause);
+        this.status = status;
+    }
+
+    public CustomHttpException(Throwable cause, HttpStatus status) {
+        super(cause);
+        this.status = status;
+    }
+
+    public CustomHttpException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, HttpStatus status) {
+        super(message, cause, enableSuppression, writableStackTrace);
+        this.status = status;
+    }
+
+    public CustomHttpException(HttpStatus status) {
+        this.status = status;
+    }
+
+    public HttpStatus getStatus() {
+        return status;
+    }
 }

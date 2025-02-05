@@ -1,8 +1,8 @@
 package com.list.index.live.live_index_list.services;
 
-import com.list.index.live.live_index_list.models.Educator;
+//import com.list.index.live.live_index_list.models.Educator;
 import com.list.index.live.live_index_list.models.User;
-import com.list.index.live.live_index_list.models.dtos.UserEducator;
+//import com.list.index.live.live_index_list.models.dtos.UserEducator;
 
 public interface UserService {
 
@@ -14,5 +14,5 @@ public interface UserService {
 
     Integer verifyUser(User user);
 
-    UserEducator combineUserAndEducator(User user, Educator educator);
+   // UserEducator combineUserAndEducator(User user, Educator educator);
 }

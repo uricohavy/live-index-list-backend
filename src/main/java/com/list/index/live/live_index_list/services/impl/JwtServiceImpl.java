@@ -1,9 +1,9 @@
 package com.list.index.live.live_index_list.services.impl;
 
-package com.revature.services;
-
 import com.list.index.live.live_index_list.exceptions.UnauthorizedException;
 import com.list.index.live.live_index_list.models.User;
+import com.list.index.live.live_index_list.services.JwtService;
+import com.list.index.live.live_index_list.services.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -17,7 +17,7 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Service
-public class JwtServiceImpl implements JwtService{
+public class JwtServiceImpl implements JwtService {
     public static final long EXPIRATION = 12 * 60 * 60 * 1000;          // expiration = 12 hours
 
     @Autowired

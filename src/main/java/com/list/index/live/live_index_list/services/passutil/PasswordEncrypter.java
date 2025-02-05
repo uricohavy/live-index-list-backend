@@ -1,9 +1,9 @@
 package com.list.index.live.live_index_list.services.passutil;
 
-import jakarta.xml.bind.DatatypeConverter;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
 
 public class PasswordEncrypter {
 
@@ -14,6 +14,6 @@ public class PasswordEncrypter {
         md5.update(Password.getBytes());
         byte[] digested = md5.digest();
 
-        return DatatypeConverter.printHexBinary(digested);
+        return HexFormat.of().formatHex(digested);
     }
 }

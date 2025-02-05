@@ -4,11 +4,10 @@ import com.list.index.live.live_index_list.exceptions.BadRequestException;
 import com.list.index.live.live_index_list.exceptions.ConflictException;
 import com.list.index.live.live_index_list.exceptions.InternalServerErrorException;
 import com.list.index.live.live_index_list.exceptions.UnauthorizedException;
-import com.list.index.live.live_index_list.models.Educator;
 import com.list.index.live.live_index_list.models.User;
-import com.list.index.live.live_index_list.models.dtos.UserEducator;
 import com.list.index.live.live_index_list.models.enums.Role;
 import com.list.index.live.live_index_list.repositories.UserRepository;
+import com.list.index.live.live_index_list.services.UserService;
 import com.list.index.live.live_index_list.services.passutil.PasswordEncrypter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,8 +46,8 @@ public class UserServiceImpl implements UserService {
             throw new ConflictException("Email already exists.");
         }
 
-        if (user.getRole() == null || !user.getRole().equals(Role.educator)) {
-            user.setRole(Role.student);
+        if (user.getRole() == null || !user.getRole().equals(Role.admin)) {
+            user.setRole(Role.customer);
         }
 
         try {
@@ -117,13 +116,13 @@ public class UserServiceImpl implements UserService {
      * @param educator the Educator entity to be combined
      * @return a UserEducatorDTO that combines data from both the User and Educator entities
      */
-    public UserEducator combineUserAndEducator(User user, Educator educator) {
-        UserEducator dto = new UserEducator();
-        dto.setUser(user);
-        if (educator != null) {
-            educator.setEducatorId(user.getUserId());
-        }
-        dto.setEducator(educator);
-        return dto;
-    }
+//    public UserEducator combineUserAndEducator(User user, Educator educator) {
+//        UserEducator dto = new UserEducator();
+//        dto.setUser(user);
+//        if (educator != null) {
+//            educator.setEducatorId(user.getUserId());
+//        }
+//        dto.setEducator(educator);
+//        return dto;
+//    }
 }

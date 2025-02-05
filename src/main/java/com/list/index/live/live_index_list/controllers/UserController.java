@@ -1,12 +1,8 @@
 package com.list.index.live.live_index_list.controllers;
 
 import com.list.index.live.live_index_list.exceptions.CustomHttpException;
-import com.list.index.live.live_index_list.models.Educator;
 import com.list.index.live.live_index_list.models.User;
-import com.list.index.live.live_index_list.models.dtos.UserEducator;
 import com.list.index.live.live_index_list.models.dtos.UserToken;
-import com.list.index.live.live_index_list.models.enums.Role;
-import com.list.index.live.live_index_list.services.EducatorService;
 import com.list.index.live.live_index_list.services.JwtService;
 import com.list.index.live.live_index_list.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +16,15 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     UserService userService;
-    EducatorService educatorService;
+//    EducatorService educatorService;
     JwtService jwtService;
 
     @Autowired
-    public UserController(UserService userService, EducatorService educatorService, JwtService jwtService) {
+    public UserController(UserService userService,
+//                          EducatorService educatorService,
+                          JwtService jwtService) {
         this.userService = userService;
-        this.educatorService = educatorService;
+//        this.educatorService = educatorService;
         this.jwtService = jwtService;
     }
 
@@ -36,23 +34,23 @@ public class UserController {
      * @param userEducator an object containing User fields and optional Educator fields to be registered
      * @return a ResponseEntity containing the userId of the newly created User, or the educatorId if the User is an Educator, with a 201 status code on success. Returns an error message and appropriate status code on failure.
      */
-    @PostMapping
-    public ResponseEntity<Object> addUser(@RequestBody UserEducator userEducator) {
-
-        try {
-            User newUser = userService.addUser(userEducator.getUser());
-
-            if (newUser.getRole().equals(Role.educator)) {
-                Educator extractedEducator = userEducator.getEducator();
-                extractedEducator.setEducatorId(newUser.getUserId());
-                Educator newEducator = educatorService.addEducator(extractedEducator);
-                return new ResponseEntity<>(newEducator.getEducatorId(), HttpStatus.CREATED);
-            }
-            return new ResponseEntity<>(newUser.getUserId(), HttpStatus.CREATED);
-        } catch (CustomHttpException e) {
-            return new ResponseEntity<>(e.getMessage(), e.getStatus());
-        }
-    }
+//    @PostMapping
+//    public ResponseEntity<Object> addUser(@RequestBody UserEducator userEducator) {
+//
+//        try {
+//            User newUser = userService.addUser(userEducator.getUser());
+//
+//            if (newUser.getRole().equals(Role.educator)) {
+//                Educator extractedEducator = userEducator.getEducator();
+//                extractedEducator.setEducatorId(newUser.getUserId());
+//                Educator newEducator = educatorService.addEducator(extractedEducator);
+//                return new ResponseEntity<>(newEducator.getEducatorId(), HttpStatus.CREATED);
+//            }
+//            return new ResponseEntity<>(newUser.getUserId(), HttpStatus.CREATED);
+//        } catch (CustomHttpException e) {
+//            return new ResponseEntity<>(e.getMessage(), e.getStatus());
+//        }
+//    }
 
     /**
      * Endpoint for verifying a User login.
@@ -85,11 +83,11 @@ public class UserController {
         try {
             User currentUser = jwtService.getUserFromToken(authorization);
 
-            if (currentUser.getRole().equals(Role.educator)) {
-                Educator currentEducator = educatorService.getEducator(currentUser.getUserId());
-                UserEducator dto = userService.combineUserAndEducator(currentUser, currentEducator);
-                return new ResponseEntity<>(dto, HttpStatus.OK);
-            }
+//            if (currentUser.getRole().equals(Role.educator)) {
+//                Educator currentEducator = educatorService.getEducator(currentUser.getUserId());
+//                UserEducator dto = userService.combineUserAndEducator(currentUser, currentEducator);
+//                return new ResponseEntity<>(dto, HttpStatus.OK);
+//            }
             return new ResponseEntity<>(currentUser, HttpStatus.OK);
         } catch (CustomHttpException e) {
             return new ResponseEntity<>(e.getMessage(), e.getStatus());
@@ -111,11 +109,11 @@ public class UserController {
             existingUser.setEmail(null);
             existingUser.setPassword(null);
 
-            if (existingUser.getRole().equals(Role.educator)) {
-                Educator existingEducator = educatorService.getEducator(existingUser.getUserId());
-                UserEducator dto = userService.combineUserAndEducator(existingUser, existingEducator);
-                return new ResponseEntity<>(dto, HttpStatus.OK);
-            }
+//            if (existingUser.getRole().equals(Role.educator)) {
+//                Educator existingEducator = educatorService.getEducator(existingUser.getUserId());
+//                UserEducator dto = userService.combineUserAndEducator(existingUser, existingEducator);
+//                return new ResponseEntity<>(dto, HttpStatus.OK);
+//            }
             return new ResponseEntity<>(existingUser, HttpStatus.OK);
         } catch (CustomHttpException e) {
             return new ResponseEntity<>(e.getMessage(), e.getStatus());

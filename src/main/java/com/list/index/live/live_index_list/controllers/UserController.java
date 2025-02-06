@@ -52,6 +52,12 @@ public class UserController {
 //        }
 //    }
 
+    @PostMapping("/add")
+    public ResponseEntity<String> addUser(@RequestBody User user) {
+        userService.addUser(user);
+        return ResponseEntity.ok("User added successfully!");
+    }
+
     /**
      * Endpoint for verifying a User login.
      *

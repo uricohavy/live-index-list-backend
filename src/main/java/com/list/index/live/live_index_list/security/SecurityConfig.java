@@ -14,11 +14,13 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/users/signup", "/users/add").permitAll()  // No authentication needed for signup or adding user
-                                .anyRequest().authenticated()  // All other requests require authentication
-                );
+                                .anyRequest().permitAll() //for testing only
+//                                .requestMatchers("/users/signup", "/users/add").permitAll()  // No authentication needed for signup or adding user
+//                                .anyRequest().authenticated()  // All other requests require authentication
+                )
                 //.httpBasic();  // For basic authentication (you can configure other authentication mechanisms here)
-                .csrf().disable();  // Disable CSRF for non-browser requests
+        .csrf().disable()// Disable CSRF for non-browser requests
+        .cors().disable();
         return http.build();
     }
 }

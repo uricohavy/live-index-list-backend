@@ -99,7 +99,8 @@ public class UserServiceImpl implements UserService {
         try {
             User existingUser = userRepository.findByEmail(user.getEmail());
             String encryptedPass = PasswordEncrypter.encryptPassword(user.getPassword());
-
+            System.out.println("Encrypted Password: " + encryptedPass);
+            System.out.println("Stored Password: " + existingUser.getPassword());
             if (existingUser != null && existingUser.getPassword().equals(encryptedPass)) {
                 return existingUser.getUserId();
             }
@@ -125,4 +126,22 @@ public class UserServiceImpl implements UserService {
 //        dto.setEducator(educator);
 //        return dto;
 //    }
+
+
+    @Override
+    public void deleteUser(Integer requestUserId, Integer idToDelete) {
+        // Check if the requestUserId matches the id of the user to delete
+        if (!requestUserId.equals(idToDelete)) {
+            throw new UnauthorizedException("You are not authorized to delete this user!");
+        }
+
+        // Proceed with deleting the user if IDs match
+        User user = userRepository.findById(idToDelete).orElse(null);
+        if (user != null) {
+            userRepository.deleteById(idToDelete);
+        } else {
+            throw new RuntimeException("User not found!");
+        }
+    }
+
 }

@@ -12,6 +12,8 @@ public interface UserService {
 
     boolean isUser(Integer userId);
 
+    void deleteUser(Integer requestUserId, Integer idToDelete);
+
     Integer verifyUser(User user);
 
    // UserEducator combineUserAndEducator(User user, Educator educator);

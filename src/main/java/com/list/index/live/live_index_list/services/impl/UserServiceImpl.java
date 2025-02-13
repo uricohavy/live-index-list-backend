@@ -10,6 +10,7 @@ import com.list.index.live.live_index_list.repositories.UserRepository;
 import com.list.index.live.live_index_list.services.UserService;
 import com.list.index.live.live_index_list.services.passutil.PasswordEncrypter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
@@ -98,6 +99,9 @@ public class UserServiceImpl implements UserService {
 
         try {
             User existingUser = userRepository.findByEmail(user.getEmail());
+            if (existingUser == null) {
+                throw new BadCredentialsException("Invalid email or password");
+            }
             String encryptedPass = PasswordEncrypter.encryptPassword(user.getPassword());
             System.out.println("Encrypted Password: " + encryptedPass);
             System.out.println("Stored Password: " + existingUser.getPassword());
